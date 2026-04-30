@@ -103,11 +103,13 @@ for both Cloudflare Pages and Vercel are checked in.
 
 1. Connect this repo to a new Pages project at
    [dash.cloudflare.com](https://dash.cloudflare.com/?to=/:account/pages).
-2. Use these settings (also encoded in `wrangler.toml`):
-   - Framework preset: **Astro**
+2. Use these settings:
+   - Framework preset: **Astro** (or "None" — both work)
    - Build command: `npm run build`
    - Build output directory: `dist`
    - Node version: `20` (or newer)
+   - **Deploy command:** leave blank. If set to `npx wrangler deploy`,
+     CF will treat the project as a Worker and the build will fail.
 3. Add the custom domain `parthg.dev`:
    - In the Pages project → **Custom domains** → add `parthg.dev` and `www.parthg.dev`.
    - Cloudflare will create the CNAME / ALIAS records for you if the domain
