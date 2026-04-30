@@ -1,0 +1,15 @@
+# Cloudflare Pages config.
+#
+# This project is a fully static Astro build, so Cloudflare Pages can deploy it
+# without an adapter. You can either configure the project through the
+# dashboard or use `wrangler pages deploy ./dist` from CI.
+#
+# Recommended Pages project settings:
+#   Framework preset:   Astro
+#   Build command:      npm run build
+#   Build output dir:   dist
+#   Root directory:     /
+#   Node version:       20
+name = "parthgdev"
+pages_build_output_dir = "dist"
+compatibility_date = "2025-01-01"

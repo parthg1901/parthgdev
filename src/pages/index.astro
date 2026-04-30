@@ -1,0 +1,105 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Socials from "@/components/Socials.astro";
+import LinkButton from "@/components/LinkButton.astro";
+import Datetime from "@/components/Datetime.astro";
+import getSortedPosts from "@/utils/getSortedPosts";
+import { getPath } from "@/utils/getPath";
+import { slugifyStr } from "@/utils/slugify";
+import IconRss from "@/assets/icons/IconRss.svg";
+import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
+import { SITE } from "@/config";
+
+const posts = await getCollection("blog", ({ data }) => !data.draft);
+const sortedPosts = getSortedPosts(posts).slice(0, SITE.postPerIndex);
+---
+
+<Layout>
+  <Header />
+  <main id="main-content" data-layout="index" class="app-layout">
+    <section id="intro" class="pt-8 pb-10">
+      <h1 class="my-4 text-4xl font-bold sm:my-6 sm:text-5xl">
+        {SITE.author}
+      </h1>
+      <p class="text-lg opacity-90">
+        Agent systems for on-chain DeFi. Most of the work is the infra that
+        keeps autonomous loops from doing something stupid.
+      </p>
+      <div class="mt-6 flex items-center gap-4">
+        <Socials />
+        <a
+          href="/rss.xml"
+          class="ml-1 inline-flex items-center"
+          aria-label="RSS feed"
+          title="RSS feed"
+        >
+          <IconRss
+            width={20}
+            height={20}
+            class="scale-110 stroke-accent stroke-2 rtl:-rotate-90"
+          />
+          <span class="sr-only">RSS feed</span>
+        </a>
+      </div>
+    </section>
+
+    {
+      sortedPosts.length > 0 && (
+        <section id="recent-posts" class="pt-2 pb-6">
+          <h2 class="text-xl font-semibold tracking-wide">Recent posts</h2>
+          <ul class="mt-4 divide-y divide-dashed divide-border/60">
+            {sortedPosts.map(({ id, data, filePath }) => (
+              <li class="py-3 sm:flex sm:items-baseline sm:justify-between sm:gap-6">
+                <a
+                  href={getPath(id, filePath)}
+                  class:list={[
+                    "block text-base font-medium text-accent",
+                    "decoration-dashed underline-offset-4 hover:underline",
+                  ]}
+                >
+                  <span
+                    style={{
+                      viewTransitionName: slugifyStr(
+                        data.title.replaceAll(".", "-")
+                      ),
+                    }}
+                  >
+                    {data.title}
+                  </span>
+                </a>
+                <div class="mt-1 sm:mt-0 sm:shrink-0">
+                  <Datetime
+                    pubDatetime={data.pubDatetime}
+                    modDatetime={data.modDatetime}
+                    timezone={data.timezone}
+                    class="text-sm"
+                  />
+                </div>
+              </li>
+            ))}
+          </ul>
+          <div class="mt-6">
+            <LinkButton href="/posts/">
+              All posts
+              <IconArrowRight class="inline-block rtl:-rotate-180" />
+            </LinkButton>
+          </div>
+        </section>
+      )
+    }
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const indexLayout = (document.querySelector("#main-content") as HTMLElement)
+      ?.dataset?.layout;
+    if (indexLayout) {
+      sessionStorage.setItem("backUrl", "/");
+    }
+  });
+</script>

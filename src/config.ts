@@ -1,0 +1,23 @@
+export const SITE = {
+  website: "https://parthg.dev/",
+  author: "Parth Gupta",
+  profile: "https://parthg.dev/about",
+  desc: "Agent systems for on-chain DeFi. Most of the work is the infra that keeps autonomous loops from doing something stupid.",
+  title: "Parth Gupta",
+  ogImage: "og.png",
+  lightAndDarkMode: true,
+  postPerIndex: 5,
+  postPerPage: 50,
+  scheduledPostMargin: 15 * 60 * 1000,
+  showArchives: false,
+  showBackButton: true,
+  editPost: {
+    enabled: false,
+    text: "Edit page",
+    url: "",
+  },
+  dynamicOgImage: true,
+  dir: "ltr",
+  lang: "en",
+  timezone: "Asia/Kolkata",
+} as const;

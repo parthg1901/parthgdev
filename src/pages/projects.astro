@@ -1,0 +1,65 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Main from "@/layouts/Main.astro";
+import { SITE } from "@/config";
+
+const projects = (await getCollection("projects", ({ data }) => !data.draft))
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<Layout title={`Projects | ${SITE.title}`}>
+  <Header />
+  <Main
+    pageTitle="Projects"
+    pageDesc="A few things I've built. Each link goes to the deep dive."
+  >
+    <ul class="mt-2 space-y-10">
+      {
+        projects.map(({ data }) => (
+          <li class="border-b border-dashed border-border/60 pb-8 last:border-b-0">
+            <h2 class="text-xl font-semibold tracking-tight sm:text-2xl">
+              {data.name}
+            </h2>
+            <p class="mt-2 text-base">{data.description}</p>
+
+            <dl class="mt-4 grid gap-y-2 text-sm sm:grid-cols-[max-content_1fr] sm:gap-x-4">
+              <dt class="font-medium opacity-70">Tech</dt>
+              <dd>{data.tech.join(" · ")}</dd>
+
+              <dt class="font-medium opacity-70">Context</dt>
+              <dd>
+                {data.hackathon} — {data.recognition}
+              </dd>
+
+              <dt class="font-medium opacity-70">Team</dt>
+              <dd>{data.team}</dd>
+            </dl>
+
+            <ul class="mt-4 flex flex-wrap gap-2">
+              {data.links.map(link => (
+                <li>
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class:list={[
+                      "inline-block rounded-full border border-border px-3 py-1",
+                      "text-sm text-accent hover:bg-muted",
+                      "decoration-dashed underline-offset-4 hover:underline",
+                    ]}
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ul>
+  </Main>
+  <Footer />
+</Layout>
