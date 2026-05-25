@@ -17,7 +17,7 @@ const posts = await getCollection("blog", ({ data }) => !data.draft);
 const sortedPosts = getSortedPosts(posts).slice(0, SITE.postPerIndex);
 ---
 
-<Layout>
+<Layout title={SITE.titleHome} pageType="website">
   <Header />
   <main id="main-content" data-layout="index" class="app-layout">
     <section id="intro" class="pt-8 pb-10">

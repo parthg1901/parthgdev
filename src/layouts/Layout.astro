@@ -3,7 +3,10 @@ import { Font } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
 import { PUBLIC_GOOGLE_SITE_VERIFICATION } from "astro:env/client";
 import { SITE } from "@/config";
+import { SOCIALS } from "@/constants";
 import "@/styles/global.css";
+
+type PageType = "website" | "article" | "about" | "collection";
 
 type Props = {
   title?: string;
@@ -15,6 +18,7 @@ type Props = {
   pubDatetime?: Date;
   modDatetime?: Date | null;
   scrollSmooth?: boolean;
+  pageType?: PageType;
 };
 
 const {
@@ -27,39 +31,99 @@ const {
   pubDatetime,
   modDatetime,
   scrollSmooth = false,
+  pageType = "website",
 } = Astro.props;
 
 const socialImageURL = new URL(ogImage, Astro.url);
+const ogType = pageType === "article" ? "article" : "website";
 
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  headline: `${title}`,
-  image: `${socialImageURL}`,
-  datePublished: `${pubDatetime?.toISOString()}`,
-  ...(modDatetime && { dateModified: modDatetime.toISOString() }),
-  author: [
-    {
-      "@type": "Person",
-      name: `${author}`,
-      ...(profile && { url: profile }),
-    },
-  ],
+const personSameAs = SOCIALS.filter(s => !s.href.startsWith("mailto:")).map(
+  s => s.href
+);
+
+const personNode = {
+  "@type": "Person",
+  "@id": new URL("/#person", SITE.website).href,
+  name: author,
+  url: profile,
+  sameAs: personSameAs,
 };
+
+const websiteNode = {
+  "@type": "WebSite",
+  "@id": new URL("/#website", SITE.website).href,
+  url: SITE.website,
+  name: SITE.title,
+  description: SITE.desc,
+  publisher: { "@id": personNode["@id"] },
+};
+
+let structuredData: object;
+if (pageType === "article" && pubDatetime) {
+  structuredData = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: title,
+    description,
+    image: socialImageURL.href,
+    datePublished: pubDatetime.toISOString(),
+    ...(modDatetime && { dateModified: modDatetime.toISOString() }),
+    mainEntityOfPage: { "@type": "WebPage", "@id": `${canonicalURL}` },
+    author: personNode,
+    publisher: personNode,
+  };
+} else if (pageType === "about") {
+  structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      websiteNode,
+      personNode,
+      {
+        "@type": "AboutPage",
+        url: `${canonicalURL}`,
+        name: title,
+        description,
+        about: { "@id": personNode["@id"] },
+        isPartOf: { "@id": websiteNode["@id"] },
+      },
+    ],
+  };
+} else if (pageType === "collection") {
+  structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      websiteNode,
+      personNode,
+      {
+        "@type": "CollectionPage",
+        url: `${canonicalURL}`,
+        name: title,
+        description,
+        isPartOf: { "@id": websiteNode["@id"] },
+      },
+    ],
+  };
+} else {
+  structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [websiteNode, personNode],
+  };
+}
 ---
 
 <!doctype html>
 <html
   dir={SITE.dir}
-  lang=`${SITE.lang ?? "en"}`
-  class={`${scrollSmooth && "scroll-smooth"}`}
+  lang={SITE.lang ?? "en"}
+  class:list={[{ "scroll-smooth": scrollSmooth }]}
 >
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/cosmic-avatar.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="canonical" href={canonicalURL} />
-    <meta name="generator" content={Astro.generator} />
 
     <!-- Load Font -->
     <Font
@@ -75,6 +139,9 @@ const structuredData = {
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={SITE.title} />
+    <meta property="og:locale" content={SITE.locale} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
@@ -100,6 +167,8 @@ const structuredData = {
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:site" content={SITE.twitterHandle} />
+    <meta property="twitter:creator" content={SITE.twitterHandle} />
     <meta property="twitter:url" content={canonicalURL} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
@@ -120,8 +189,6 @@ const structuredData = {
       title={SITE.title}
       href={new URL("rss.xml", Astro.site)}
     />
-
-    <meta name="theme-color" content="" />
 
     {
       // If PUBLIC_GOOGLE_SITE_VERIFICATION is set in the environment variable,

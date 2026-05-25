@@ -13,11 +13,11 @@ html[data-theme="light"] {
 }
 
 html[data-theme="dark"] {
-  --background: #212737;
-  --foreground: #eaedf3;
+  --background: #0a0b10;
+  --foreground: #ece7d8;
   --accent: #ff6b01;
-  --muted: #343f60;
-  --border: #ab4b08;
+  --muted: #1a1d28;
+  --border: #2a2f3d;
 }
 
 @theme inline {

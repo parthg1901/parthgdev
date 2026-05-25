@@ -10,7 +10,7 @@ const projects = (await getCollection("projects", ({ data }) => !data.draft))
   .sort((a, b) => a.data.order - b.data.order);
 ---
 
-<Layout title={`Projects | ${SITE.title}`}>
+<Layout title={`Projects | ${SITE.title}`} pageType="collection">
   <Header />
   <Main
     pageTitle="Projects"
