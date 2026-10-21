@@ -11,6 +11,7 @@ import { getPath } from "@/utils/getPath";
 import { slugifyStr } from "@/utils/slugify";
 import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
 import IconChevronRight from "@/assets/icons/IconChevronRight.svg";
+import IconRss from "@/assets/icons/IconRss.svg";
 import { SITE } from "@/config";
 
 type Props = {
@@ -111,6 +112,20 @@ const nextPost =
     >
       <Content />
     </article>
+
+    <a
+      data-pagefind-ignore
+      href="/rss.xml"
+      class="my-8 inline-flex items-center gap-2 opacity-80 hover:text-accent hover:opacity-100"
+    >
+      <IconRss
+        width={18}
+        height={18}
+        class="stroke-accent stroke-2 rtl:-rotate-90"
+        aria-hidden="true"
+      />
+      <span>Subscribe via RSS</span>
+    </a>
 
     <EditPost class="sm:hidden" {hideEditPost} {post} />
 
