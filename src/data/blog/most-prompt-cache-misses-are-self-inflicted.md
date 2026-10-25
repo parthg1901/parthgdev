@@ -10,7 +10,9 @@ In September I set out to make a harness I work on cache-friendly. The big chang
 
 Then I ran a full agent session against the OpenAI API and logged every request. 91% of input tokens came from cache. By the usual measure, that's healthy.
 
-If you want the basics of prefix caching, [Kamran Tahir's survey](https://saybackend.com/blog/prompt-caching-agent-harnesses/) covers them well. This post is about what breaks it.
+[Kamran Tahir's survey](https://saybackend.com/blog/prompt-caching-agent-harnesses/) is the best overview I've found. It covers how prefix caching works down to the KV cache, and what each major harness documents about prefix layout, invalidation, TTLs and compaction.
+
+This post is one measured case.
 
 A hit rate hides a lot, because a request that appends a big tool result is mostly new tokens anyway. So I counted something narrower: tokens the API had already seen, billed again as new.
 
