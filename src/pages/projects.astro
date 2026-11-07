@@ -31,7 +31,7 @@ const projects = (await getCollection("projects", ({ data }) => !data.draft))
 
               <dt class="font-medium opacity-70">Context</dt>
               <dd>
-                {data.hackathon} — {data.recognition}
+                {data.context ?? `${data.hackathon} — ${data.recognition}`}
               </dd>
 
               <dt class="font-medium opacity-70">Team</dt>

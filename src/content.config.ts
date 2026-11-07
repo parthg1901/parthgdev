@@ -30,8 +30,9 @@ const projects = defineCollection({
     name: z.string(),
     description: z.string(),
     tech: z.array(z.string()),
-    hackathon: z.string(),
-    recognition: z.string(),
+    hackathon: z.string().optional(),
+    recognition: z.string().optional(),
+    context: z.string().optional(),
     team: z.string(),
     order: z.number(),
     links: z.array(

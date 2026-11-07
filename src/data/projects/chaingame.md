@@ -5,7 +5,7 @@ tech: ["Next.js", "Solidity", "Hardhat", "Chainlink CCIP", "Cloudflare Workers",
 hackathon: "Chainlink Constellation Hackathon 2023"
 recognition: "Top 20 (out of 500+ submissions)"
 team: "Solo build."
-order: 4
+order: 6
 links:
   - label: "GitHub"
     href: "https://github.com/parthg1901/ChainGame"

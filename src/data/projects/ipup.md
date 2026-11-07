@@ -5,7 +5,7 @@ tech: ["Rust", "Solidity", "Filecoin IPC", "FVM"]
 hackathon: "Filecoin Data Economy Hackathon 2024"
 recognition: "Winner"
 team: "Solo build."
-order: 2
+order: 4
 links:
   - label: "GitHub"
     href: "https://github.com/parthg1901/ipup"

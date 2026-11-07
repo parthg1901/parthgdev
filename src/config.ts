@@ -2,7 +2,7 @@ export const SITE = {
   website: "https://parthg.dev/",
   author: "Parth Gupta",
   profile: "https://parthg.dev/about",
-  desc: "Agent systems for on-chain DeFi. Most of the work is the infra that keeps autonomous loops from doing something stupid.",
+  desc: "I build agent harnesses: the loop, tools, context and evals around the model. Most of the work is the infra that keeps autonomous loops from doing something stupid.",
   title: "Parth Gupta",
   titleHome: "Parth Gupta | building agent systems",
   twitterHandle: "@parthg1901",

@@ -5,7 +5,7 @@ tech: ["Next.js", "Solidity", "libp2p", "ZK-SNARKs", "Theta EdgeCloud", "Theta E
 hackathon: "Theta Hackathon 2024"
 recognition: "Honorable Mention"
 team: "Solo build."
-order: 3
+order: 5
 links:
   - label: "GitHub"
     href: "https://github.com/ThetreLive"
