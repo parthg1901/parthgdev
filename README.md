@@ -55,11 +55,11 @@ Create a new file in `src/data/blog/<slug>.md`:
 ---
 title: "Post title"
 description: "One-line summary used for OG tags and the post list."
-pubDatetime: 2026-05-01            # required
-modDatetime: 2026-05-02            # optional, set when you edit
-tags: ["ai-agents", "defi"]        # optional, currently no tag UI
-draft: false                       # optional, true to hide
-featured: false                    # optional, currently unused
+pubDatetime: 2026-05-01 # required
+modDatetime: 2026-05-02 # optional, set when you edit
+tags: ["ai-agents", "defi"] # optional, currently no tag UI
+draft: false # optional, true to hide
+featured: false # optional, currently unused
 ---
 
 Post body in markdown. Use code fences, lists, etc. as normal.
@@ -81,14 +81,14 @@ description: "One-line description."
 tech: ["TypeScript", "Solidity"]
 hackathon: "Some Hackathon 2025"
 recognition: "Winner"
-team: "Solo build."                # or "Team of 2 — I built X, ..."
-order: 1                           # render order on /projects
+team: "Solo build." # or "Team of 2 — I built X, ..."
+order: 1 # render order on /projects
 links:
   - label: "GitHub"
     href: "https://github.com/..."
   - label: "DoraHacks"
     href: "https://dorahacks.io/buidl/..."
-draft: false                       # optional
+draft: false # optional
 ---
 ```
 

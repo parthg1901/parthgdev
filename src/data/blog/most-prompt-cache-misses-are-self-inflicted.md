@@ -2,7 +2,8 @@
 title: "Most prompt cache misses are self-inflicted"
 description: "A cache hit rate that looks healthy can hide the requests where your agent harness rewrote its own prefix. How to find them, and why the provider is rarely the one to blame."
 pubDatetime: 2026-10-21
-tags: ["agents", "prompt-caching", "harnesses", "opencode", "codex", "claude-code"]
+tags:
+  ["agents", "prompt-caching", "harnesses", "opencode", "codex", "claude-code"]
 draft: false
 ---
 

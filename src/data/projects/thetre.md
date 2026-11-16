@@ -1,7 +1,15 @@
 ---
 name: "Thetre"
 description: "Decentralized movie streaming with on-chain DAO governance, built on Theta Network."
-tech: ["Next.js", "Solidity", "libp2p", "ZK-SNARKs", "Theta EdgeCloud", "Theta EdgeStore"]
+tech:
+  [
+    "Next.js",
+    "Solidity",
+    "libp2p",
+    "ZK-SNARKs",
+    "Theta EdgeCloud",
+    "Theta EdgeStore",
+  ]
 hackathon: "Theta Hackathon 2024"
 recognition: "Honorable Mention"
 team: "Solo build."
