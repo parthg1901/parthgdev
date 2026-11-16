@@ -7,7 +7,7 @@ tags: ["agents", "acp", "protocols", "websockets"]
 
 The Agent Client Protocol is the right shape for non-trivial agent integrations. It's also missing a transport for clients that don't speak stdio. Both things are true, and this post is about what that costs you in practice.
 
-*The agent runtime is solved; the wire isn't.*
+_The agent runtime is solved; the wire isn't._
 
 ACP defines a small, sharp set of primitives for the kind of long-running, tool-using, permission-gated agents that are now the actual product surface. The primitives are general. The wire isn't.
 
@@ -17,7 +17,7 @@ The spec ends at stdio. What teams build to bridge it tends to reinvent the prim
 
 The shape of the integration looks like this. A user asks for something non-trivial: refactor a codebase, draft a plan, set up an environment. The agent runs for minutes, calling tools as it goes — opens files, runs scripts, queries APIs.
 
-Sometimes it pauses to ask a question — *should I delete this?* — and blocks on the answer. The user closes the laptop halfway through and reopens it from a different tab on a different machine. The conversation is still there.
+Sometimes it pauses to ask a question — _should I delete this?_ — and blocks on the answer. The user closes the laptop halfway through and reopens it from a different tab on a different machine. The conversation is still there.
 
 Each of those is a different hard problem dressed as a single user-facing experience. Streaming alone is easy. Streaming with mid-stream tool calls and permission blocks is not.
 
@@ -53,7 +53,7 @@ Four primitives carry most of ACP's surface for a non-trivial agent integration.
 
 An ad-hoc stream is just bytes; a structured one tells the client what kind of thing each chunk is and how to render it. Without that, every client builds its own schema and they all disagree.
 
-`session/request_permission`. Mid-execution, the agent can pause and ask the client a question — usually *are you sure I should do this?* — and block until the answer comes back.
+`session/request_permission`. Mid-execution, the agent can pause and ask the client a question — usually _are you sure I should do this?_ — and block until the answer comes back.
 
 The primitive turns out to be more general than its name: any blocking request from agent to user can flow through it. The protocol guarantees the call is request/response, not fire-and-forget on a bus — a stronger contract than it sounds.
 
@@ -83,11 +83,11 @@ With two browser tabs open, both see the request. The first POST wins; the secon
 
 ![Opencode HTTP permission flow: agent emits permission.asked to the server, the server fans the event out over SSE to both tabs, both tabs POST a reply, the first call resolves the permission, the second receives 404.](/assets/opencode-broadcast.svg)
 
-*Same protocol-level need; two very different shapes.*
+_Same protocol-level need; two very different shapes._
 
 This isn't a knock on Opencode's engineering. They obviously know ACP cold; they shipped it before the HTTP API existed. The cost is structural, and it shows up at the transport boundary every time.
 
-*What ACP defines as RPC, the web reinvents as broadcast-and-race.*
+_What ACP defines as RPC, the web reinvents as broadcast-and-race._
 
 ## Closing the gap
 

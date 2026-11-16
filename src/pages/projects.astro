@@ -6,8 +6,9 @@ import Footer from "@/components/Footer.astro";
 import Main from "@/layouts/Main.astro";
 import { SITE } from "@/config";
 
-const projects = (await getCollection("projects", ({ data }) => !data.draft))
-  .sort((a, b) => a.data.order - b.data.order);
+const projects = (
+  await getCollection("projects", ({ data }) => !data.draft)
+).sort((a, b) => a.data.order - b.data.order);
 ---
 
 <Layout title={`Projects | ${SITE.title}`} pageType="collection">
