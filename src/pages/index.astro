@@ -15,6 +15,11 @@ import { SITE } from "@/config";
 
 const posts = await getCollection("blog", ({ data }) => !data.draft);
 const sortedPosts = getSortedPosts(posts).slice(0, SITE.postPerIndex);
+const featuredProjects = (
+  await getCollection("projects", ({ data }) => !data.draft && data.featured)
+)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
 ---
 
 <Layout title={SITE.titleHome} pageType="website">
@@ -46,6 +51,41 @@ const sortedPosts = getSortedPosts(posts).slice(0, SITE.postPerIndex);
         </a>
       </div>
     </section>
+
+    {
+      featuredProjects.length > 0 && (
+        <section id="selected-work" class="pt-2 pb-8">
+          <h2 class="text-xl font-semibold tracking-wide">Selected work</h2>
+          <ul class="mt-4 divide-y divide-dashed divide-border/60">
+            {featuredProjects.map(({ data }) => (
+              <li class="py-4">
+                <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                  <a
+                    href={data.links[0]?.href ?? "/projects/"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class:list={[
+                      "text-base font-medium text-accent",
+                      "decoration-dashed underline-offset-4 hover:underline",
+                    ]}
+                  >
+                    {data.name}
+                  </a>
+                  <span class="text-sm opacity-70">{data.context}</span>
+                </div>
+                <p class="mt-1 text-base">{data.summary ?? data.description}</p>
+              </li>
+            ))}
+          </ul>
+          <div class="mt-6">
+            <LinkButton href="/projects/">
+              All projects
+              <IconArrowRight class="inline-block rtl:-rotate-180" />
+            </LinkButton>
+          </div>
+        </section>
+      )
+    }
 
     {
       sortedPosts.length > 0 && (

@@ -29,6 +29,8 @@ const projects = defineCollection({
   schema: z.object({
     name: z.string(),
     description: z.string(),
+    summary: z.string().optional(),
+    featured: z.boolean().optional(),
     tech: z.array(z.string()),
     hackathon: z.string().optional(),
     recognition: z.string().optional(),

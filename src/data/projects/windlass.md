@@ -1,6 +1,8 @@
 ---
 name: "Windlass"
 description: "A coding agent for the terminal that shows every step, token and cache hit on screen. It reads your code, edits files and runs commands until the change is done, with commands sandboxed, risky actions approved first, and /undo taking both files and conversation back. Sessions are an append-only event log, so they resume, fork and replay. Ships a line interface, a full-screen interface and an ACP server for editors, with MCP, hooks, skills and subagents."
+summary: "An open-source coding agent for the terminal: sandboxed commands, approvals, /undo, and sessions you can resume, fork and replay."
+featured: true
 tech: ["TypeScript", "Bun", "ACP", "MCP", "OpenAI API"]
 context: "Side project, 2026"
 team: "Solo — I designed the architecture and directed coding agents to build it."
