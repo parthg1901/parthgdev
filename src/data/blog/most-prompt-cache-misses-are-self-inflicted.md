@@ -161,6 +161,8 @@ If the prefix is intact and the request still missed, it's the provider, or the 
 
 Most of the misses in this post were found with a version of that function. It takes minutes to write. Guessing took me much longer.
 
+I've since turned that function into a tool. [prefixlens](https://prefixlens.parthg.dev) does the same comparison for Anthropic Messages, Chat Completions and Responses requests, and names the call, the block that changed, what it cost and the fix.
+
 Then make it a test. Codex has [one](https://github.com/openai/codex/blob/c419fd01a70dd1d05356da443ac44328bda2e6f4/codex-rs/core/tests/suite/prompt_caching.rs#L473) that changes approval and sandbox settings mid-session and asserts the next request is the previous one plus appended items. If your harness can't pass that, your invoice will tell you.
 
 ## It's usually you
@@ -185,3 +187,5 @@ OpenAI has since made 12-hour caching available on its API. That helps with time
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 The cache doesn't miss at random. It misses where your harness changed its mind about the past.
+
+_Update, November 2026: the analysis in this post is now an open-source tool, [prefixlens](https://github.com/parthg1901/prefixlens) (`npm install --save-dev prefixlens`)._
