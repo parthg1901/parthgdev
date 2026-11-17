@@ -8,6 +8,8 @@ context: "Side project, 2026"
 team: "Solo — I designed it, tested it on real frameworks and reviewed every change."
 order: 1.4
 links:
+  - label: "Site"
+    href: "https://prefixlens.parthg.dev"
   - label: "GitHub"
     href: "https://github.com/parthg1901/prefixlens"
   - label: "npm"
